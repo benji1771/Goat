@@ -1,2 +1,2 @@
 # Goat
-A Goat that randomly eats files in a directory
+Ever wanted a goat to eat your hw? look no more
