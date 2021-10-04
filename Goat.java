@@ -1,0 +1,159 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Goat {
+    
+    private ArrayList<File> filesToEat;
+    private ArrayList<String> keywords = new ArrayList<String>();
+    private String name;
+    private int maxCanEat;
+    private int ate;
+
+
+
+
+    public Goat(File folder, File kw){
+        filesToEat = new ArrayList<File>();
+        name = "Benjamin";
+
+        maxCanEat = 100;
+        ate = 0;
+        getKeywords(kw);
+        listFilesToEat(folder, filesToEat);
+    }
+
+    public Goat(String n, File folder, File kw){
+        filesToEat = new ArrayList<File>();
+        name = n;
+
+        maxCanEat = 100;
+        ate = 0;
+        getKeywords(kw);
+        listFilesToEat(folder, filesToEat);
+    }
+    public Goat(String n, int max, File folder, File kw){
+        filesToEat = new ArrayList<File>();
+        name = n;
+
+        maxCanEat = max;
+        ate = 0;
+        getKeywords(kw);
+        listFilesToEat(folder, filesToEat);
+    }
+
+    private void getKeywords(File file){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String key = br.readLine();
+            while(key != null){
+                keywords.add(key);
+                key = br.readLine();
+            }
+            if(br != null){
+                br.close();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Keywords file is missing");
+            e.printStackTrace();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public boolean isFull(){
+        if(ate == maxCanEat){
+            return true;
+        }
+        return false;
+    }
+    
+    public String getName(){
+        return name;
+    }
+    public void burp(){
+        if(ate == maxCanEat){
+            maxCanEat+=50;
+        }
+        ate = 0;
+    }
+
+    public void listFilesToEat(File folder, List<File> file){
+        for(File f : folder.listFiles()){
+            if(f.isDirectory()){
+                listFilesToEat(f, file);
+            } else {
+                file.add(f);
+            }
+        }
+        
+
+    }
+
+    public void setMaxCanEat(int n){
+        maxCanEat = n;
+    }
+
+    public void eat(){
+        if(filesToEat.isEmpty()){
+            System.out.println("No Files to Delete");
+            return;
+        }
+        Collections.shuffle(filesToEat);
+        if(isFull()){
+            System.out.println("I'm Full");
+            return;
+        }
+        filesToEat.get(0).delete();
+        filesToEat.remove(0);
+        ate++;
+    }
+    public void eat(int n){
+        if(filesToEat.isEmpty()){
+            System.out.println("No Files to Delete");
+            return;
+        }
+        Collections.shuffle(filesToEat);
+        for(int i = 0; i < n; i++){
+            if(filesToEat.isEmpty()){
+                System.out.println("No Files to Delete");
+                return;
+            }
+            if(isFull()){
+                System.out.println("I'm Full");
+                return;
+            }
+            filesToEat.get(0).delete();
+            filesToEat.remove(0);
+            ate++;
+            
+        }
+    }
+
+    public void eatTillFull(){
+        if(filesToEat.isEmpty()){
+            System.out.println("No Files to Delete");
+            return;
+        }
+        Collections.shuffle(filesToEat);
+        while(!isFull()){
+            if(filesToEat.isEmpty()){
+                System.out.println("No Files to Delete");
+                return;
+            }
+            filesToEat.get(0).delete();
+            filesToEat.remove(0);
+        }
+    }
+
+    public static void main(String[] args) {
+        
+    }
+}
