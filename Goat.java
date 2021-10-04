@@ -14,14 +14,39 @@ public class Goat {
     private String name;
     private int maxCanEat;
     private int ate;
-
+    private int level;
     
 
-
+    public Goat(File folder){
+        filesToEat = new ArrayList<File>();
+        name = "Benjamin";
+        maxCanEat = 100;
+        ate = 0;
+        level = 1;
+        listFilesToEat(folder, filesToEat);
+    }
     public Goat(File folder, File kw){
         filesToEat = new ArrayList<File>();
         name = "Benjamin";
-
+        maxCanEat = 100;
+        ate = 0;
+        level = 1;
+        getKeywords(kw);
+        listFilesToEat(folder, filesToEat);
+        narrowToKeyWords();
+    }
+    public Goat(String n, File folder){
+        filesToEat = new ArrayList<File>();
+        name = n;
+        level = 1;
+        maxCanEat = 100;
+        ate = 0;
+        listFilesToEat(folder, filesToEat);
+    }
+    public Goat(String n, File folder, File kw){
+        filesToEat = new ArrayList<File>();
+        name = n;
+        level = 1;
         maxCanEat = 100;
         ate = 0;
         getKeywords(kw);
@@ -29,20 +54,18 @@ public class Goat {
         narrowToKeyWords();
     }
 
-    public Goat(String n, File folder, File kw){
+    public Goat(String n, int max, File folder){
         filesToEat = new ArrayList<File>();
         name = n;
-
-        maxCanEat = 100;
+        level = 1;
+        maxCanEat = max;
         ate = 0;
-        getKeywords(kw);
         listFilesToEat(folder, filesToEat);
-        narrowToKeyWords();
     }
     public Goat(String n, int max, File folder, File kw){
         filesToEat = new ArrayList<File>();
         name = n;
-
+        level = 1;
         maxCanEat = max;
         ate = 0;
         getKeywords(kw);
@@ -104,9 +127,12 @@ public class Goat {
         if(ate == maxCanEat){
             maxCanEat+=50;
         }
+        level++;
         ate = 0;
     }
-
+    public int getLevel(){
+        return level;
+    }
     public void listFilesToEat(File folder, List<File> file){
         for(File f : folder.listFiles()){
             if(f.isDirectory()){
