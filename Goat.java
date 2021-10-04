@@ -15,7 +15,7 @@ public class Goat {
     private int maxCanEat;
     private int ate;
 
-
+    
 
 
     public Goat(File folder, File kw){
@@ -26,6 +26,7 @@ public class Goat {
         ate = 0;
         getKeywords(kw);
         listFilesToEat(folder, filesToEat);
+        narrowToKeyWords();
     }
 
     public Goat(String n, File folder, File kw){
@@ -36,6 +37,7 @@ public class Goat {
         ate = 0;
         getKeywords(kw);
         listFilesToEat(folder, filesToEat);
+        narrowToKeyWords();
     }
     public Goat(String n, int max, File folder, File kw){
         filesToEat = new ArrayList<File>();
@@ -45,8 +47,28 @@ public class Goat {
         ate = 0;
         getKeywords(kw);
         listFilesToEat(folder, filesToEat);
+        narrowToKeyWords();
     }
 
+
+    private void narrowToKeyWords(){
+        String tempFName;
+        String tempKeyName;
+        boolean check = false;
+        for(File f: filesToEat){
+            tempFName = f.getName().toLowerCase();
+            for(String keys: keywords){         
+                tempKeyName = keys.toLowerCase();
+                if(tempFName.contains(tempKeyName)){
+                    check = true;
+                }
+            }
+            if(!check){
+                filesToEat.remove(f);
+            }
+            check = false;
+        }
+    }
     private void getKeywords(File file){
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
