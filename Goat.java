@@ -12,6 +12,7 @@ public class Goat {
     private ArrayList<File> filesToEat;
     private ArrayList<String> keywords = new ArrayList<String>();
     private String name;
+    private final int MAX_DEFAULT_CAN_EAT = 10;
     private int maxCanEat;
     private int ate;
     private int level;
@@ -20,7 +21,7 @@ public class Goat {
     public Goat(File folder){
         filesToEat = new ArrayList<File>();
         name = "Benjamin";
-        maxCanEat = 100;
+        maxCanEat = MAX_DEFAULT_CAN_EAT;
         ate = 0;
         level = 1;
         listFilesToEat(folder, filesToEat);
@@ -28,7 +29,7 @@ public class Goat {
     public Goat(File folder, File kw){
         filesToEat = new ArrayList<File>();
         name = "Benjamin";
-        maxCanEat = 100;
+        maxCanEat = MAX_DEFAULT_CAN_EAT;
         ate = 0;
         level = 1;
         getKeywords(kw);
@@ -39,7 +40,7 @@ public class Goat {
         filesToEat = new ArrayList<File>();
         name = n;
         level = 1;
-        maxCanEat = 100;
+        maxCanEat = MAX_DEFAULT_CAN_EAT;
         ate = 0;
         listFilesToEat(folder, filesToEat);
     }
@@ -47,7 +48,7 @@ public class Goat {
         filesToEat = new ArrayList<File>();
         name = n;
         level = 1;
-        maxCanEat = 100;
+        maxCanEat = MAX_DEFAULT_CAN_EAT;
         ate = 0;
         getKeywords(kw);
         listFilesToEat(folder, filesToEat);
@@ -125,7 +126,7 @@ public class Goat {
     }
     public void burp(){
         if(ate == maxCanEat){
-            maxCanEat+=50;
+            maxCanEat+=10;
         }
         level++;
         ate = 0;
@@ -201,7 +202,4 @@ public class Goat {
         }
     }
 
-    public static void main(String[] args) {
-        
-    }
 }
