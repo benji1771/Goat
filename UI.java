@@ -39,11 +39,10 @@ public class UI extends JFrame implements ActionListener {
 
         JLabel image = new JLabel();
         //image.setPreferredSize(new Dimension(200, 200));
-        image.setSize(200, 200);
 
         ImageIcon img = new ImageIcon("goatImage.jpg");
         System.out.println(image.getWidth());
-        Image scaled = img.getImage().getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_SMOOTH);
+        Image scaled = img.getImage().getScaledInstance(500, 100, Image.SCALE_SMOOTH);
         img = new ImageIcon(scaled);
         image.setIcon(img);
         
