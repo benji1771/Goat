@@ -3,6 +3,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -140,8 +141,18 @@ public class UI extends JFrame implements ActionListener {
         if(e.getSource() == makeGoat){
             System.out.println("makeGoat Works");
             if(!keys.exists()){
-                pane.setText("You need a \'keywords.txt\' file in that directory");
+                JOptionPane.showMessageDialog(this, "WARNING: THIS WILL RANDOMLY DELETE FILES PERMANENTLY");
+                myGoat = new Goat(dFile);
+                image.setIcon(new ImageIcon("img/goatImage.jpg"));
+                pane.setText("Goat Created");
+                userInput.setVisible(false);
+                makeGoat.setVisible(false);
+                eat.setVisible(true);
+                eatFull.setVisible(true);
+                burp.setVisible(true);
+                pack();
             }else{
+
                 myGoat = new Goat(dFile, keys);
                 image.setIcon(new ImageIcon("img/goatImage.jpg"));
                 pane.setText("Goat Created");
