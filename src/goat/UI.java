@@ -1,10 +1,14 @@
+package goat;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -12,19 +16,21 @@ import java.awt.Image;
 
 public class UI extends JFrame implements ActionListener {
     JButton userInput, makeGoat, burp;
+    JTextField pane;
+    Goat myGoat;
     public UI(){
         //Start The UI HERE
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
+        setResizable(false);
         //All Components
         /*
         Buttons: Keywords____Directory, Create Goat, Burp
         Textpane: name, max,
         */
-        userInput = new JButton("Submit");
+        userInput = new JButton("Choose Folder");
         makeGoat = new JButton("Create");
-        burp = new JButton("Burp");
+        burp = new JButton("Eat");
         
         userInput.addActionListener(this);
         makeGoat.addActionListener(this);
@@ -47,10 +53,10 @@ public class UI extends JFrame implements ActionListener {
         image.setIcon(img);
         
 
-        image.setIcon(new ImageIcon("goatImage.jpg"));
+        image.setIcon(new ImageIcon("img/goatImage.jpg"));
         //image.setPreferredSize(new Dimension(200, 200));
         
-        JTextField pane = new JTextField();
+        pane = new JTextField();
         pane.setColumns(20);
         pane.setEditable(false);
 
@@ -97,20 +103,57 @@ public class UI extends JFrame implements ActionListener {
         pack();
     }
     public static void main(String args[]){
+        try {
+            String className = UIManager.getSystemLookAndFeelClassName();
+            UIManager.setLookAndFeel(className);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         UI gui = new UI();
         gui.setVisible(true);
     }
+
+    JFileChooser fChooser = new JFileChooser();
+    String directoryMeal;
+    
+    String kwFile;
+    File dFile;
+    File keys;
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
+        
         if(e.getSource() == userInput){
             System.out.println("UserInput Works");
+            fChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int r = fChooser.showOpenDialog(null);
+ 
+            if (r == JFileChooser.APPROVE_OPTION) {
+                // set the label to the path of the selected directory
+                directoryMeal = fChooser.getSelectedFile().getAbsolutePath();
+                pane.setText(directoryMeal);
+                kwFile = directoryMeal + "\\keywords.txt";
+                dFile = new File(directoryMeal);
+                keys = new File(kwFile);
+            }
         }
         if(e.getSource() == makeGoat){
             System.out.println("makeGoat Works");
+            if(!keys.exists()){
+                pane.setText("You need a \'keywords.txt\' file in that directory");
+            }else{
+                myGoat = new Goat(dFile, keys);
+                pane.setText("Goat Created");
+                userInput.setVisible(false);
+                makeGoat.setVisible(false);
+            }
         }
         if(e.getSource() == burp){
             System.out.println("burp Works");
+            if(myGoat != null){
+                myGoat.eat();
+            }
         }
         
     }
