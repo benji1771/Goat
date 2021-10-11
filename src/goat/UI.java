@@ -12,11 +12,11 @@ import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.Image;
 
 public class UI extends JFrame implements ActionListener {
-    JButton userInput, makeGoat, burp;
+    JButton userInput, makeGoat, eat, burp, eatFull;
     JTextField pane;
+    JLabel image;
     Goat myGoat;
     public UI(){
         //Start The UI HERE
@@ -30,11 +30,19 @@ public class UI extends JFrame implements ActionListener {
         */
         userInput = new JButton("Choose Folder");
         makeGoat = new JButton("Create");
-        burp = new JButton("Eat");
-        
+        eat = new JButton("Eat");
+        eatFull = new JButton("Eat till Full");
+        burp = new JButton("Burp");
+
+        eatFull.setVisible(false);
+        eat.setVisible(false);
+        burp.setVisible(false);
+
+        eatFull.addActionListener(this);
+        burp.addActionListener(this);
         userInput.addActionListener(this);
         makeGoat.addActionListener(this);
-        burp.addActionListener(this);
+        eat.addActionListener(this);
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -43,18 +51,7 @@ public class UI extends JFrame implements ActionListener {
 
 
 
-        JLabel image = new JLabel();
-        //image.setPreferredSize(new Dimension(200, 200));
-
-        ImageIcon img = new ImageIcon("goatImage.jpg");
-        System.out.println(image.getWidth());
-        Image scaled = img.getImage().getScaledInstance(500, 100, Image.SCALE_SMOOTH);
-        img = new ImageIcon(scaled);
-        image.setIcon(img);
-        
-
-        image.setIcon(new ImageIcon("img/goatImage.jpg"));
-        //image.setPreferredSize(new Dimension(200, 200));
+        image = new JLabel();
         
         pane = new JTextField();
         pane.setColumns(20);
@@ -82,6 +79,7 @@ public class UI extends JFrame implements ActionListener {
         c.gridx = 0;
         c.gridy = 1;
         panel.add(userInput, c);
+        panel.add(eat, c);
 
         //makeGoat
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -89,6 +87,7 @@ public class UI extends JFrame implements ActionListener {
         c.gridx = 0;
         c.gridy = 2;
         panel.add(makeGoat, c);
+        panel.add(eatFull, c);
 
         //burp
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -144,17 +143,31 @@ public class UI extends JFrame implements ActionListener {
                 pane.setText("You need a \'keywords.txt\' file in that directory");
             }else{
                 myGoat = new Goat(dFile, keys);
+                image.setIcon(new ImageIcon("img/goatImage.jpg"));
                 pane.setText("Goat Created");
                 userInput.setVisible(false);
                 makeGoat.setVisible(false);
+                eat.setVisible(true);
+                eatFull.setVisible(true);
+                burp.setVisible(true);
+                pack();
             }
         }
-        if(e.getSource() == burp){
+        if(e.getSource() == eat){
             System.out.println("burp Works");
             if(myGoat != null){
                 myGoat.eat();
             }
         }
-        
+        if(e.getSource() == eatFull){
+            if(myGoat != null){
+                myGoat.eatTillFull();
+            }
+        }
+        if(e.getSource() == burp){
+            if(myGoat != null){
+                myGoat.burp();
+            }
+        }
     }
 }
