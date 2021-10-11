@@ -29,8 +29,8 @@ public class UI extends JFrame implements ActionListener {
         Buttons: Keywords____Directory, Create Goat, Burp
         Textpane: name, max,
         */
-        userInput = new JButton("Choose Folder");
-        makeGoat = new JButton("Create");
+        userInput = new JButton("Choose Folder To Eat From");
+        makeGoat = new JButton("Create Goat");
         eat = new JButton("Eat");
         eatFull = new JButton("Eat till Full");
         burp = new JButton("Burp");
@@ -66,12 +66,13 @@ public class UI extends JFrame implements ActionListener {
         c.gridy = 0;
         panel.add(image, c);
 
-        c.gridwidth = 1;
+        
         //Text Field
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 1;
         c.gridy = 1;
+        c.gridwidth = 1;
         panel.add(pane, c);
 
         //userInput
@@ -80,6 +81,7 @@ public class UI extends JFrame implements ActionListener {
         c.gridx = 0;
         c.gridy = 1;
         panel.add(userInput, c);
+        c.gridwidth = 2;
         panel.add(eat, c);
 
         //makeGoat
@@ -144,7 +146,7 @@ public class UI extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "WARNING: THIS WILL RANDOMLY DELETE FILES PERMANENTLY");
                 myGoat = new Goat(dFile);
                 image.setIcon(new ImageIcon("img/goatImage.jpg"));
-                pane.setText("Goat Created");
+                pane.setVisible(false);
                 userInput.setVisible(false);
                 makeGoat.setVisible(false);
                 eat.setVisible(true);
@@ -155,7 +157,7 @@ public class UI extends JFrame implements ActionListener {
 
                 myGoat = new Goat(dFile, keys);
                 image.setIcon(new ImageIcon("img/goatImage.jpg"));
-                pane.setText("Goat Created");
+                pane.setVisible(false);
                 userInput.setVisible(false);
                 makeGoat.setVisible(false);
                 eat.setVisible(true);
